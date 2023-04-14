@@ -48,5 +48,26 @@ view -bS ../data/C17.sam | \
 ../data/Pver.gtf \
 ```
 
+```{bash filter}
+head ../data/GFF_C17.annotated.gtf
+```
 
+```{bash filter}
+awk '$3 == "transcript" && $1 !~ /^#/ {print}' ../data/GFF_C17.annotated.gtf | grep 'class_code "u"' | awk '$5 - $4 > 199 {print}' > ../output/novel_lncRNA_candidates.gtf
+```
 
+```{bash filter}
+head ../output/novel_lncRNA_candidates.gtf
+```
+
+```{bash filter}
+gffread ../output/novel_lncRNA_candidates.gtf -g ../data/Pver_genome_assembly_v1.0.fasta -w ../output/novel_lncRNA_candidates.fasta
+```
+
+```{bash filter}
+grep ">" ../data/Pver_genome_assembly_v1.0.fasta | head
+
+```
+```{bash}
+head  
+```
