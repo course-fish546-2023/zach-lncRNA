@@ -1,0 +1,52 @@
+---
+title: "02-hisat"
+author: "Zach Bengtsson"
+date: "2023-04-13"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+```{bash hisat}
+/home/shared/hisat2-2.2.1/hisat2-build \
+-f ../data/Pver_genome_assembly_v1.0.fasta \
+../data/Pver_genome_assembly_v1.0.index
+
+```
+``` {bash hisat}
+/home/shared/hisat2-2.2.1/hisat2 \
+-x ../data/Pver_genome_assembly_v1.0.index \
+-p 8 \
+-1 ../data/C17_R1_001.fastq.gz \
+-2 ../data/C17_R2_001.fastq.gz \
+-S ../data/C17.sam
+```
+Change aligned to sorted
+```{bash samtools}
+/home/shared/samtools-1.12/samtools \
+view -bS ../data/C17.sam | \
+/home/shared/samtools-1.12/samtools sort \
+-o ../data/C17_aligned.bam
+```
+
+```{bash stringtie}
+/home/shared/stringtie-2.2.1.Linux_x86_64/stringtie \
+-p 8 \
+-G ../data/Pver_genome_assembly_v1.0.gff3 \
+-o ../data/Pver.gtf \
+../data/C17_aligned.bam
+```
+
+```{bash gffcompare}
+/home/shared/gffcompare-0.12.6.Linux_x86_64/gffcompare \
+-r ../data/Pver_genome_assembly_v1.0.gff3 \
+-G \
+-o ../data/GFF_C17 \
+../data/Pver.gtf \
+```
+
+
+
