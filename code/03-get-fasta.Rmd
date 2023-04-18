@@ -77,8 +77,3 @@ getfasta -fi ../data/Pver_genome_assembly_v1.0.fasta -bed ../output/novel_lncRNA
 ```{bash filter}
 head ../output/novel_lncRNA_candidates-valid.fasta
 ```
-
-```{bash filter}
-grep ">" ../data/Pver_genome_assembly_v1.0.fasta | head
-
-```
