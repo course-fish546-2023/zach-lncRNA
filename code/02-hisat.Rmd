@@ -61,13 +61,10 @@ head ../output/novel_lncRNA_candidates.gtf
 ```
 
 ```{bash filter}
-gffread ../output/novel_lncRNA_candidates.gtf -g ../data/Pver_genome_assembly_v1.0.fasta -w ../output/novel_lncRNA_candidates.fasta
+gffread ../output/novel_lncRNA_candidates.gtf -g ../data/Pver_genome_assembly_v1.0-valid.gtf -w ../output/novel_lncRNA_candidates.fasta
 ```
 
 ```{bash filter}
 grep ">" ../data/Pver_genome_assembly_v1.0.fasta | head
 
-```
-```{bash}
-head 
 ```
