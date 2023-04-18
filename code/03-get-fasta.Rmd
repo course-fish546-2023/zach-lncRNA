@@ -77,3 +77,11 @@ getfasta -fi ../data/Pver_genome_assembly_v1.0.fasta -bed ../output/novel_lncRNA
 ```{bash filter}
 head ../output/novel_lncRNA_candidates-valid.fasta
 ```
+
+Use awk to extract the transcript IDs from the cpc2_output.txt file that have a score less than 0 and saves them to noncoding_transcripts_ids.txt. It uses grep to search for the transcript IDs in noncoding_transcripts_ids.txt within novel_lncRNA_candidates-valid.gtf and saves the output to final_lncRNAs.gtf.
+```{bash}
+awk '$NF < 0 {print $1}' ../output/result_cpc2.txt > ../output/noncoding_transcripts_ids.txt
+grep -Fwf ../output/noncoding_transcripts_ids.txt ../output/novel_lncRNA_candidates-valid.gtf > ../output/final_lncRNAs.gtf
+```
+
+

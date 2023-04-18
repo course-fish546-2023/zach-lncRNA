@@ -1,0 +1,50 @@
+---
+title: "04-LncFinder"
+author: "Zach Bengtsson"
+date: "2023-04-18"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+Load the LncFinder package...
+```{r}
+install.packages("LncFinder")
+library(LncFinder)
+
+```
+
+```{r}
+install.packages("readr")
+library(readr)
+```
+
+```{r}
+library(readr)
+gtf <- read_delim("/home/shared/8TB_HDD_02/zbengt/github/zach-lncRNA/output/novel_lncRNA_candidates-valid.gtf", delim = "\t", col_names = FALSE)
+
+```
+
+```{r}
+library(LncFinder)
+if (!requireNamespace("BiocManager", quietly = TRUE))
+    install.packages("BiocManager")
+BiocManager::install("GenomicRanges")
+library(GenomicRanges)
+
+```
+
+```{r}
+# Import your GTF file using readr or any other method
+gtf <- readr::read_delim("/home/shared/8TB_HDD_02/zbengt/github/zach-lncRNA/output/novel_lncRNA_candidates-valid.gtf", delim = "\t", comment = "#", col_names = FALSE, col_types = cols())
+
+# Convert to a GRanges object
+gr <- makeGRangesFromDataFrame(gtf, keep.extra.columns = TRUE)
+
+# Run LncFinder
+lnc <- findLncRNA(gr, genome = "hg19", annotation = "gtf")
+
+
+```
