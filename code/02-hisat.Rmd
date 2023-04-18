@@ -69,5 +69,5 @@ grep ">" ../data/Pver_genome_assembly_v1.0.fasta | head
 
 ```
 ```{bash}
-head  
+head 
 ```
