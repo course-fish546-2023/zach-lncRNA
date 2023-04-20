@@ -1,0 +1,36 @@
+---
+title: "04-Run-LncFinder"
+author: "Zach Bengtsson"
+date: "2023-04-19"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+Load the LncFinder and associated packages for workflow...
+```{r}
+install.packages(c("readr", "tidyverse", "LncFinder", "GenomicRanges", "Biostrings", "rtracklayer"))
+
+```
+```{r}
+if (!requireNamespace("BiocManager", quietly = TRUE))
+  install.packages("BiocManager")
+
+BiocManager::install("GenomicFeatures")
+```
+
+```{r}
+library(GenomicFeatures)
+library(GenomicRanges)
+library(Biostrings)
+library(rtracklayer)
+library(LncFinder)
+library(tidyverse)
+
+```
+```{r}
+lncRNAs <- import("../output/final_lncRNAs.gtf")
+genome <- import("../output/Pver_genome_assembly_v1.0-valid.gtf")
+```

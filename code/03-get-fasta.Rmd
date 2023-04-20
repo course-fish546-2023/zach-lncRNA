@@ -77,11 +77,25 @@ getfasta -fi ../data/Pver_genome_assembly_v1.0.fasta -bed ../output/novel_lncRNA
 ```{bash filter}
 head ../output/novel_lncRNA_candidates-valid.fasta
 ```
+```{r}
+# Read in the .txt file
+data <- read.table("../output/result_cpc2.txt", header = TRUE)
 
-Use awk to extract the transcript IDs from the cpc2_output.txt file that have a score less than 0 and saves them to noncoding_transcripts_ids.txt. It uses grep to search for the transcript IDs in noncoding_transcripts_ids.txt within novel_lncRNA_candidates-valid.gtf and saves the output to final_lncRNAs.gtf.
-```{bash}
-awk '$NF < 0 {print $1}' ../output/result_cpc2.txt > ../output/noncoding_transcripts_ids.txt
-grep -Fwf ../output/noncoding_transcripts_ids.txt ../output/novel_lncRNA_candidates-valid.gtf > ../output/final_lncRNAs.gtf
+# Write the data out as a .tsv file
+write.table(data, "../output/cpc2results.tsv", sep = "\t", quote = FALSE, row.names = FALSE)
+```
+
+```{bash head}
+head ~/github/zach-lncRNA/output/novel_lncRNA_candidates-valid.gtf
 ```
 
 
+Use awk to extract the transcript IDs from the cpc2_output.txt file that have a score less than 0 and saves them to noncoding_transcripts_ids.txt. It uses grep to search for the transcript IDs in noncoding_transcripts_ids.txt within novel_lncRNA_candidates-valid.gtf and saves the output to final_lncRNAs.gtf.
+```{bash}
+awk '$4 < 0 {print $1}' ../output/cpc2results-valid.tsv > ../output/noncoding_transcripts_ids.txt
+grep -Fwf ../output/noncoding_transcripts_ids.txt ../output/novel_lncRNA_candidates-valid.gtf > ../output/final_lncRNAs.gtf
+```
+
+```{bash head}
+head ~/github/zach-lncRNA/output/result_cpc2.txt
+```
