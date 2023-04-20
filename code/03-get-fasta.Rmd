@@ -74,6 +74,8 @@ Bedtools to get fasta. Use the -fi option to specify the input reference genome 
 getfasta -fi ../data/Pver_genome_assembly_v1.0.fasta -bed ../output/novel_lncRNA_candidates-valid.gtf -fo ../output/novel_lncRNA_candidates-valid.fasta -name -split
 ```
 
+
+
 ```{bash filter}
 head ../output/novel_lncRNA_candidates-valid.fasta
 ```
@@ -92,10 +94,20 @@ head ~/github/zach-lncRNA/output/novel_lncRNA_candidates-valid.gtf
 
 Use awk to extract the transcript IDs from the cpc2_output.txt file that have a score less than 0 and saves them to noncoding_transcripts_ids.txt. It uses grep to search for the transcript IDs in noncoding_transcripts_ids.txt within novel_lncRNA_candidates-valid.gtf and saves the output to final_lncRNAs.gtf.
 ```{bash}
-awk '$4 < 0 {print $1}' ../output/cpc2results-valid.tsv > ../output/noncoding_transcripts_ids.txt
+awk '$NF < 0 {print $1}' ../output/cpc2results-last.txt > ../output/noncoding_transcripts_ids.txt
+grep -Fwf ../output/noncoding_transcripts_ids.txt ../output/novel_lncRNA_candidates-valid.fasta > ../output/final_lncRNAs.gtf
+```
+
+
+```{bash}
+head ../output/final_lncRNAs.gtf
+```
+
+
+```{bash}
 grep -Fwf ../output/noncoding_transcripts_ids.txt ../output/novel_lncRNA_candidates-valid.gtf > ../output/final_lncRNAs.gtf
 ```
 
 ```{bash head}
-head ~/github/zach-lncRNA/output/result_cpc2.txt
+head ~/github/zach-lncRNA/output/noncoding_transcripts_ids.txt
 ```
