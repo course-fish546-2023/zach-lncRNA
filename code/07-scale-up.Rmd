@@ -15,13 +15,17 @@ knitr::opts_chunk$set(echo = TRUE)
 ../output/Pver_genome_assembly_v1.0-valid.index
 ```
 
+
+
 ``` {bash hisat}
+find /home/shared/8TB_HDD_01/pver/*gz \
+| xargs basename -s _R1_001.fastq.gz | xargs -I{} \
 /home/shared/hisat2-2.2.1/hisat2 \
 -x ../output/Pver_genome_assembly_v1.0-valid.index \
 -p 8 \
--1 ../data/C17_R1_001.fastq.gz \
--2 ../data/C17_R2_001.fastq.gz \
--S ../output/C17-valid.sam
+-1 ../data/{}_R1_001.fastq.gz \
+-2 ../data/{}_R2_001.fastq.gz \
+-S ../output/{}-valid.sam
 ```
 
 ```{bash samtools}
