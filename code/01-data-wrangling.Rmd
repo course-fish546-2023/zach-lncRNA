@@ -22,12 +22,22 @@ wget -r \
 --no-check-certificate \
 --quiet \
 --no-directories --no-parent \
--P /home/shared/8TB_HDD_02/zbengt/data/zach-lncRNA/data \
+-P /home/shared/8TB_HDD_01/pver \
 -A *fastq.gz \
-https://gannet.fish.washington.edu/Atumefaciens/hputnam-Becker_E5/Becker_RNASeq/data/raw/
+https://gannet.fish.washington.edu/Atumefaciens/hputnam-Becker_E5/Becker_RNASeq/data/trimmed/
 ```
+
 
 Grabbing the P ver gtf Sam created...
 ```{bash gtf}
 curl -o ../data/Pver_genome_assembly_v1.0-valid.gtf https://gannet.fish.washington.edu/Atumefaciens/20230127-pver-gff_to_gtf/Pver_genome_assembly_v1.0-valid.gtf
 ```
+
+```{bash}
+ls /home/shared/8TB_HDD_01/pver
+```
+```{bash}
+
+```
+
+

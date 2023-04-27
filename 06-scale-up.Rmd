@@ -1,0 +1,49 @@
+---
+title: "06-scale-up"
+author: "Zach Bengtsson"
+date: "2023-04-25"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## R Markdown
+
+```{bash}
+# create an array of file names
+files=(/home/shared/8TB_HDD_01/pver/*_R1_001.fastq.gz)
+
+# iterate over the array and run the commands for each pair of files
+for f in "${files[@]}"; do
+  # extract the sample name from the file name
+  sample=${f%%_*}
+
+  # build the index
+  /home/shared/hisat2-2.2.1/hisat2-build -f ../data/Pver_genome_assembly_v1.0.fasta ../output/Pver_genome_assembly_v1.0-${sample}.index
+
+  # align the reads
+  printf '%s\n' "../data/${sample}_R1_001.fastq.gz" "../data/${sample}_R2_001.fastq.gz" | \
+    xargs -I{} /home/shared/hisat2-2.2.1/hisat2 -x ../output/Pver_genome_assembly_v1.0-${sample}.index -p 8 -1 {} -2 {} -S ../output/${sample}.sam
+
+  # convert SAM to BAM and sort
+  /home/shared/samtools-1.12/samtools view -bS ../output/${sample}.sam | \
+    /home/shared/samtools-1.12/samtools sort -o ../output/${sample}_sorted.bam
+
+  # assemble transcripts
+  /home/shared/stringtie-2.2.1.Linux_x86_64/stringtie -p 8 -G ../data/Pver_genome_assembly_v1.0-valid.gtf -o ../output/${sample}.gtf ../output/${sample}_sorted.bam
+
+  # compare with reference annotation
+  /home/shared/gffcompare-0.12.6.Linux_x86_64/gffcompare -r ../data/Pver_genome_assembly_v1.0-valid.gtf -G -o ../output/${sample} ../output/${sample}.gtf
+
+  # filter for novel lncRNA candidates
+  awk '$3 == "transcript" && $1 !~ /^#/ {print}' ../output/${sample}.annotated.gtf | \
+    grep 'class_code "u"' | \
+    awk '$5 - $4 > 199 {print}' > ../output/novel_lncRNA_candidates-${sample}.gtf
+
+  # extract sequences for novel lncRNA candidates
+  /home/shared/bedtools2/bin/bedtools getfasta -fi ../data/Pver_genome_assembly_v1.0.fasta -bed ../output/novel_lncRNA_candidates-${sample}.gtf -fo ../output/novel_lncRNA_candidates-${sample}.fasta -name -split
+done
+
+```
