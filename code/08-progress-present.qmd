@@ -31,7 +31,7 @@ editor: visual
 -   Trimmed fastq files
 
 ```{bash}
-head /home/shared/8TB_HDD_01/pver/C17_R1_001.fastq.gz
+head /home/shared/8TB_HDD_02/zbengt/github/zach-lncRNA/data/C17_R1_001.fastq
 ```
 
 ## Methods: Workflow
