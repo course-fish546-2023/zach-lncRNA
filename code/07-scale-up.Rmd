@@ -48,6 +48,8 @@ find /home/shared/8TB_HDD_01/pver/samtools-output/*bam \
 ```
 
 ```{bash gffcompare}
+{r, eval=FALSE, echo=TRUE}
+#| code-line-numbers: "2"
 /home/shared/gffcompare-0.12.6.Linux_x86_64/gffcompare \
 -r ../data/Pver_genome_assembly_v1.0-valid.gtf \
 -G \

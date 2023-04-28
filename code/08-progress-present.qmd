@@ -1,0 +1,90 @@
+---
+title: "Long non-coding RNA discovery in _Pocillopora verrucosa_"
+format: revealjs
+editor: visual
+---
+
+## Project Background and Goal
+
+-   Long non-coding RNAs (lncRNAs) are a type of RNA molecule that are longer than 200 nucleotides and do not encode for proteins.
+
+-   Play important roles in various cellular processes
+
+    -   gene expression regulation
+
+    -   chromatin remodeling
+
+    -   post-transcriptional processing
+
+## Project Background and Goals
+
+-   RNA-seq data from corals
+
+    -   Treatment: nutrient exposure
+
+-   Identify long non-coding RNAs (lncRNAs) in RNA-seq data
+
+    -   Develop a list of all lncRNAs found in each sample for use in differential and/or correlation expression analysis
+
+## RNA-seq Data
+
+-   Trimmed fastq files
+
+```{bash}
+head /home/shared/8TB_HDD_01/pver/C17_R1_001.fastq.gz
+```
+
+## Methods: Workflow
+
+![](workflow.png)
+
+## Highlight: HISAT2
+
+-   Run HISAT2 over all files to align
+
+```{r, eval=FALSE, echo=TRUE}
+#| code-line-numbers: "1|2"
+find /home/shared/8TB_HDD_01/pver/*gz \
+| xargs basename -s _R1_001.fastq.gz | xargs -I{} \
+/home/shared/hisat2-2.2.1/hisat2 \
+-x ../output/Pver_genome_assembly_v1.0-valid.index \
+-p 8 \
+-1 /home/shared/8TB_HDD_01/pver/{}_R1_001.fastq.gz \
+-2 /home/shared/8TB_HDD_01/pver/{}_R2_001.fastq.gz \
+-S /home/shared/8TB_HDD_01/pver/hisat-output/{}-valid.sam
+```
+
+## Highlight: CPC2
+
+```{r, eval=FALSE, echo=TRUE}
+eval "$(/opt/anaconda/anaconda3/bin/conda shell.bash hook)"
+
+python /home/shared/CPC2_standalone-1.0.1/bin/CPC2.py 
+-i /home/shared/8TB_HDD_01/pver/bedtools-output/merged_lncRNA_candidates.fasta 
+-o /home/shared/8TB_HDD_01/pver/cpc2-output/cpc2_results.txt
+```
+
+## Current Place
+
+```{r, eval=FALSE, echo=TRUE}
+#| code-line-numbers: "6"
+awk 'NR>1 && $9 < 0 {print $1}' /home/shared/8TB_HDD_01/pver/cpc2-output
+/cpc2_results.txt.txt > /home/shared/8TB_HDD_01/pver/cpc2-output
+/noncoding_transcripts_ids.txt
+grep -Fwf /home/shared/8TB_HDD_01/pver/cpc2-output/noncoding_transcripts_ids.txt 
+/home/shared/8TB_HDD_01/pver/bedtools-output/merged_lncRNA_candidates.fasta > ~ 
+  /github/zach-lncRNA/output/merged_final_lncRNAs.gtf
+```
+
+-   List of lncRNA transcript IDs for all samples
+
+```{bash}
+head ~/github/zach-lncRNA/output/merged_final_lncRNAs.gtf
+```
+
+## Where I'm headed...
+
+| Week 6     | Kallisto count matrices                 |
+|------------|-----------------------------------------|
+| Week 7-8   | Co-expression with coding RNAs          |
+| Weeks 9-10 | DESEq2, lncRNA sensitivity to treatment |
