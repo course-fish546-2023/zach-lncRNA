@@ -68,27 +68,18 @@ getfasta -fi ../data/Pver_genome_assembly_v1.0.fasta -bed /home/shared/8TB_HDD_0
 
 ```{bash}
 eval "$(/opt/anaconda/anaconda3/bin/conda shell.bash hook)"
-python /home/shared/CPC2_standalone-1.0.1/bin/CPC2.py -i /home/shared/8TB_HDD_01/pver/bedtools-output/merged_lncRNA_candidates.fasta -o /home/shared/8TB_HDD_01/pver/cpc2-output/cpc2_results.txt
+python /home/shared/CPC2_standalone-1.0.1/bin/CPC2.py -i /home/shared/8TB_HDD_01/pver/bedtools-output/merged_lncRNA_candidates.fasta -o ~/github/zach-lncRNA/output/merged_cpc2_results
 ```
-
 ```{bash}
 # Filter out transcripts with coding potential
-awk 'NR>1 && $9 < 0 {print $1}' /home/shared/8TB_HDD_01/pver/cpc2-output/cpc2_results.txt.txt > /home/shared/8TB_HDD_01/pver/cpc2-output/noncoding_transcripts_ids.txt
-grep -Fwf /home/shared/8TB_HDD_01/pver/cpc2-output/noncoding_transcripts_ids.txt /home/shared/8TB_HDD_01/pver/bedtools-output/merged_lncRNA_candidates.fasta > ~/github/zach-lncRNA/output/merged_final_lncRNAs.gtf
+awk 'NR>1 && $6 < 0 {print $1}' ~/github/zach-lncRNA/output/merged_cpc2_results.txt > ~/github/zach-lncRNA/output/noncoding_transcripts_ids.txt
+grep -Fwf ~/github/zach-lncRNA/output/noncoding_transcripts_ids.txt /home/shared/8TB_HDD_01/pver/bedtools-output/merged_lncRNA_candidates.fasta > ~/github/zach-lncRNA/output/merged_final_lncRNAs.gtf
 ```
 
 ```{bash}
 head ~/github/zach-lncRNA/output/merged_final_lncRNAs.gtf
 ```
 
-
-```{r}
-# Read in the file
-cpc2_results <- read.table("/home/shared/8TB_HDD_01/pver/cpc2-output/cpc2_results.txt.txt", header=TRUE, sep="\t")
-
-# View the first few rows of the file
-head(cpc2_results)
-```
 
 
 
