@@ -79,6 +79,8 @@ grep -c "^>" /home/shared/8TB_HDD_01/pver/bedtools-output/merged_lncRNA_candidat
 
 ```{bash}
 head ~/github/zach-lncRNA/output/merged_final_lncRNAs.gtf
+
+tail ~/github/zach-lncRNA/output/merged_final_lncRNAs.gtf
 ```
 
 ```{bash}
