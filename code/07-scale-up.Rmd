@@ -27,7 +27,7 @@ find /home/shared/8TB_HDD_01/pver/*gz \
 ```
 
 
-```{bash}
+```{bash samtools}
 find /home/shared/8TB_HDD_01/pver/hisat-output -name "*.sam" \
 -exec bash -c 'file="{}"; \
 basename="${file##*/}"; \
