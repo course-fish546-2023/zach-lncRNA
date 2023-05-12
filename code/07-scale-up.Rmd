@@ -97,6 +97,7 @@ getfasta -fi ../data/Pver_genome_assembly_v1.0.fasta -bed /home/shared/8TB_HDD_0
 eval "$(/opt/anaconda/anaconda3/bin/conda shell.bash hook)"
 python /home/shared/CPC2_standalone-1.0.1/bin/CPC2.py -i /home/shared/8TB_HDD_01/pver/bedtools-output/merged_lncRNA_candidates.fasta -o ~/github/zach-lncRNA/output/merged_cpc2_results
 ```
+
 ```{bash}
 # Filter out transcripts with coding potential
 awk '$8 == "noncoding" {print $1}' ~/github/zach-lncRNA/output/merged_cpc2_results.txt > ~/github/zach-lncRNA/output/noncoding_transcripts_ids.txt
@@ -125,76 +126,13 @@ wc -l ../data/Pver_genome_assembly_v1.0-valid.gtf
 wc -l /home/shared/8TB_HDD_01/pver/stringtie-merge-output/stringtie_merged.gtf
 ```
 
-```{bash}
-/home/shared/stringtie-2.2.1.Linux_x86_64/stringtie \
---merge \
--G ../data/Pver_genome_assembly_v1.0-valid.gtf \
--o /home/shared/8TB_HDD_01/pver/stringtie-merge-output/merged_lncRNA_counts.gtf \
-/home/shared/8TB_HDD_01/pver/stringtie-output/*-valid.gtf \
--e -B -C ~/github/zach-lncRNA/output/merged_final_lncRNAs.gtf
-
-```
-
-```{bash}
-find /home/shared/8TB_HDD_01/pver/samtools-output/*bam \
-| xargs basename -s -valid_sorted.bam | xargs -I{} \
-/home/shared/stringtie-2.2.1.Linux_x86_64/stringtie \
--e -B -G ../data/Pver_genome_assembly_v1.0-valid.gtf -o ../output/lncRNA_counts /home/shared/8TB_HDD_01/pver/samtools-output/{}-valid_sorted.bam
-
-```
 
 
-```{bash}
-head ../output/lncRNA_counts
-```
 
 
-```{bash}
-/home/shared/stringtie-2.2.1.Linux_x86_64/prepDE.py \
--i /home/shared/8TB_HDD_01/pver/stringtie-merge-output/merged_lncRNA_counts.gtf \
--g ~/github/zach-lncRNA/output/merged_lncRNA_counts.csv
-
-```
-
-```{bash stringtie}
-/home/shared/stringtie-2.2.1.Linux_x86_64/stringtie \
---merge \
--G /home/shared/8TB_HDD_01/pver/final-lncRNAs/merged_final_lncRNAs.gtf \
--o ~/github/zach-lncRNA/output/lnRNA_final_count.gtf \
-/home/shared/8TB_HDD_01/pver/samtools-output/*-valid_sorted.bam
-
-```
-
-```{bash}
-/home/shared/stringtie-2.2.1.Linux_x86_64/stringtie \
---merge \
--G ../data/Pver_genome_assembly_v1.0-valid.gtf \
--o ../output/lncRNA_counts.gtf \
-/home/shared/8TB_HDD_01/pver/stringtie-output/*-valid.gtf \
--e -B -C /home/shared/8TB_HDD_01/pver/final-lncRNAs/merged_final_lncRNAs.gtf
-
-```
-
-```{bash}
-/home/shared/stringtie-2.2.1.Linux_x86_64/stringtie \
--e -B -p 8 -G /home/shared/8TB_HDD_01/pver/final-lncRNAs/merged_final_lncRNAs.gtf -o ../output/stringtie_counts_matrix.gtf \
--A lncRNA_abundances.tsv /home/shared/8TB_HDD_01/pver/samtools-output/*-valid_sorted.bam
-
-```
 
 
-```{bash}
-head ../output/lncRNA_counts.gtf
-```
 
-
-```{bash}
-eval "$(/opt/anaconda/anaconda3/bin/conda shell.bash hook)"
-python /home/shared/stringtie-2.2.1.Linux_x86_64/prepDE.py \
--i ../output/lncRNA_counts.gtf \
--g ../outputs/lncRNA_counts.csv
-
-```
 
 
 
