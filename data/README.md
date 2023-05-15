@@ -1,8 +1,17 @@
 # Data
 
+This project uses data from Danielle Becker's experiment exposing colonies of *Pocillopora verrucosa* to low level nutrient conditions (nitrogen and phosphorous).
+
+RNA-seq data for 16 control (no low level nutrient exposure) and treatment (low level nutrient exposure) colonies.
+
+Reference and data can be found [here](https://osf.io/uayvk/)
+
 ### Sources
-* *P. ver* genome is from [reef genomics](http://pver.reefgenomics.org/download/)
-* RNA-seq data are from work completed by Danielle Becker and can be found [here](https://osf.io/uayvk/)
+
+-   [GitHub Repo](https://github.com/hputnam/Becker_E5)
+-   [RNA-seq data](https://gannet.fish.washington.edu/Atumefaciens/hputnam-Becker_E5/Becker_RNASeq/data/trimmed/)
+-   [*P. ver* genome assembly (GFF3 and fasta)](http://pver.reefgenomics.org/download/)
+-   [*P. ver* genome assembly GTF](https://gannet.fish.washington.edu/Atumefaciens/20230127-pver-gff_to_gtf/)
 
 Ultimately decided to go with reads already processed through QC and trimmed. Preliminary HISAT alignments show approximalry 15-20% higher mapping when using trimmed data compared to raw reads.
 
