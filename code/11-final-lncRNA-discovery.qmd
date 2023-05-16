@@ -119,3 +119,27 @@ grep -Fwf ~/github/zach-lncRNA/output/noncoding_transcripts_ids.txt /home/shared
 ```
 
 Final result is GTF containing list of lncRNAs across all samples
+
+## Kallisto Abundance Estimation
+
+```{bash, eval=FALSE, echo=TRUE}
+find /home/shared/8TB_HDD_01/pver/*R1_001.fastq* \
+| xargs basename -s _R1_001.fastq.gz | xargs -I{} /home/shared/kallisto/kallisto \
+quant -i ~/github/zach-lncRNA/output/kallisto-output/Pver_genome_assembly_v1.0.index \
+-o /home/shared/8TB_HDD_01/pver/kallisto-output/{} \
+-t 20 \
+/home/shared/8TB_HDD_01/pver/{}_R1_001.fastq.gz \
+/home/shared/8TB_HDD_01/pver/{}_R2_001.fastq.gz \
+2>&1 | tee /home/shared/8TB_HDD_01/pver/kallisto-output/{}.out
+```
+
+## Trinity Count Matrix Generation
+
+```{bash, eval=FALSE, echo=TRUE}
+perl /home/shared/trinityrnaseq-v2.12.0/util/abundance_estimates_to_matrix.pl \
+--est_method kallisto \
+--gene_trans_map none \
+--out_prefix ~/github/zach-lncRNA/output/count_matrix \
+--name_sample_by_basedir \
+/home/shared/8TB_HDD_01/pver/kallisto-output/*/abundance.tsv
+```

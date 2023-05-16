@@ -20,11 +20,25 @@ index -i ~/github/zach-lncRNA/output/kallisto-output/Pver_genome_assembly_v1.0.i
 Running kallisto on paired data...
 
 ```{bash}
-find /home/shared/8TB_HDD_01/pver/*_001.fastq.gz \
-| xargs basename -s _R1.fastp-trim.20bp-5prime.20220224.fq.gz | xargs -I{} /home/shared/kallisto/kallisto \
-quant -i /home/shared/8TB_HDD_02/zbengt/data/oyster-lnc/01-lncRNA-kallisto/index/GCF_002022765.2_C_virginica-3.0_lncRNA.index \
--o /home/shared/8TB_HDD_02/zbengt/github/oyster-lnc/output/01-lncRNA-kallisto/{} \
--t 40 \
-/home/shared/8TB_HDD_02/zbengt/data/oyster-lnc/01-lncRNA-kallisto/fq/{}_R1.fastp-trim.20bp-5prime.20220224.fq.gz /home/shared/8TB_HDD_02/zbengt/data/oyster-lnc/01-lncRNA-kallisto/fq/{}_R2.fastp-trim.20bp-5prime.20220224.fq.gz \
-2>&1 | tee ../output/01-lncRNA-kallisto/{}.out
+find /home/shared/8TB_HDD_01/pver/*R1_001.fastq* \
+| xargs basename -s _R1_001.fastq.gz | xargs -I{} /home/shared/kallisto/kallisto \
+quant -i ~/github/zach-lncRNA/output/kallisto-output/Pver_genome_assembly_v1.0.index \
+-o /home/shared/8TB_HDD_01/pver/kallisto-output/{} \
+-t 20 \
+/home/shared/8TB_HDD_01/pver/{}_R1_001.fastq.gz \
+/home/shared/8TB_HDD_01/pver/{}_R2_001.fastq.gz \
+2>&1 | tee /home/shared/8TB_HDD_01/pver/kallisto-output/{}.out
 ```
+
+```{bash}
+perl /home/shared/trinityrnaseq-v2.12.0/util/abundance_estimates_to_matrix.pl \
+--est_method kallisto \
+--gene_trans_map none \
+--out_prefix ~/github/zach-lncRNA/output/count_matrix \
+--name_sample_by_basedir \
+/home/shared/8TB_HDD_01/pver/kallisto-output/*/abundance.tsv
+```
+
+
+
+
