@@ -1,7 +1,14 @@
 ---
-title: "Final lncRNA Discovery in _Pocillopora verrucosa_"
-format: html
-editor: visual
+title: "Long non-coding RNA discovery in _Pocillopora verrucosa_"
+author: "Zach Bengtsson"
+date: "`r format(Sys.time(), '%d %B, %Y')`"  
+format:
+  html:
+    toc: true
+    toc-depth: 2
+    html-math-method: katex
+    css: styles.css
+    theme: sandstone
 ---
 
 ![Workflow of programs](https://github.com/zbengt/zbengt.github.io/blob/master/assets/img/lncRNA-disc.png?raw=true)
