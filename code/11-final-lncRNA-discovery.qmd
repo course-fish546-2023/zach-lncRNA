@@ -150,3 +150,29 @@ perl /home/shared/trinityrnaseq-v2.12.0/util/abundance_estimates_to_matrix.pl \
 --name_sample_by_basedir \
 /home/shared/8TB_HDD_01/pver/kallisto-output/*/abundance.tsv
 ```
+
+# Final Figures Mock-Up
+
+## Identifying lncRNAs
+
+![](11-final-lncRNA-discovery_files/counts-at-workflow-steps.png)
+
+Show the filtering process along with number of transcripts that make it past each step.
+
+## Size and GC Content
+
+![](11-final-lncRNA-discovery_files/size-and-gc.png)
+
+Description and comparison of lncRNAs to mRNAs. Size and GC content.
+
+## Heat Map Showing Differential Expression
+
+![](11-final-lncRNA-discovery_files/DGE-heatmap.png)
+
+This will show the results of some if not all lncRNAs DGE analysis.
+
+## Figure Showing Potential Functions of lncRNAs
+
+![](11-final-lncRNA-discovery_files/GO-term-summary.png)
+
+Not 100% sure what this will look like, but will most likely hinge on WGCNA and/or blasting against a lncRNA database.
