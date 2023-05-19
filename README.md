@@ -44,10 +44,20 @@ Endpoint is getting pushed according to how quickly I am able to finish with eno
 -   [Progress update presentation 04/27](https://rpubs.com/zbengt/1034660)
 -   [Project R pub in quarto 05/12](https://rpubs.com/zbengt/1040642)
 
-### Completed this week...
+### Weekly Log
+
+### Week 08
+
+-   updates to [count matrix code](<https://github.com/course-fish546-2023/zach-lncRNA/blob/main/code/09-count-matrix.Rmd>)
+
+-   kallisto run to [retrieve count matrix](https://github.com/course-fish546-2023/zach-lncRNA/blob/main/output/count_matrix.isoform.counts.matrix), filter needed
+
+-   worked on Rpub formatting and figure mock-up, [view here](https://rpubs.com/zbengt/1040642)
+
+### Week 07
 
 -   07-scale-up code, with workflow up to original endpoint, fixed and cleaned up
 
--   Tried using stringtie for count matrix, switched to kallisto
+-   Tried using stringtie for count matrix, switching to kallisto
 
 -   R pub for final project
