@@ -39,6 +39,31 @@ perl /home/shared/trinityrnaseq-v2.12.0/util/abundance_estimates_to_matrix.pl \
 /home/shared/8TB_HDD_01/pver/kallisto-output/*/abundance.tsv
 ```
 
+```{bash}
+# Step 1: Specify the transcript ID file (GTF format)
+transcript_id_file="/home/shared/8TB_HDD_02/zbengt/github/zach-lncRNA/output/merged_final_lncRNAs.gtf"
+
+# Step 2: Specify the count matrix file
+count_matrix_file="/home/shared/8TB_HDD_02/zbengt/github/zach-lncRNA/output/count_matrix.isoform.counts.matrix"
+
+# Step 3: Specify the output file for the filtered count matrix
+filtered_count_matrix_file="/home/shared/8TB_HDD_02/zbengt/github/zach-lncRNA/output/filtered_count_matrix.csv"
+
+# Extract the middle part of the transcript IDs from the GTF file
+grep -oP "(?<=transcript::)[^:]*" "$transcript_id_file" > "tmp_transcript_ids.txt"
+
+# Filter the count matrix using the extracted transcript IDs
+awk 'NR==FNR{a[$0];next} ($1 in a)' "tmp_transcript_ids.txt" "$count_matrix_file" > "$filtered_count_matrix_file"
+
+# Remove the temporary transcript ID file
+rm "tmp_transcript_ids.txt"
+
+```
+
+
+
+
+
 
 
 
