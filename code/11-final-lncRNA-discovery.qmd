@@ -11,6 +11,10 @@ format:
     theme: sandstone
 ---
 
+[Zenodo Archive](https://zenodo.org/record/7976107)
+[![](https://zenodo.org/badge/626610142.svg)](https://zenodo.org/badge/latestdoi/626610142)
+
+
 ![Workflow of programs](https://github.com/zbengt/zbengt.github.io/blob/master/assets/img/lncRNA-disc.png?raw=true)
 
 # Step by step workflow...
