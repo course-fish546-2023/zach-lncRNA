@@ -88,6 +88,10 @@ head /home/shared/8TB_HDD_01/pver/gffcompare-output/gffcompare_merged.annotated.
 awk '$3 == "transcript" && $1 !~ /^#/ {print}' /home/shared/8TB_HDD_01/pver/gffcompare-output/gffcompare_merged.annotated.gtf | grep 'class_code "u"' | awk '$5 - $4 > 199 {print}' > /home/shared/8TB_HDD_01/pver/filter-output/merged_lncRNA_candidates.gtf
 ```
 
+```{bash}
+head /home/shared/8TB_HDD_01/pver/filter-output/merged_lncRNA_candidates.gtf
+```
+
 ```{bash bedtools}
 /home/shared/bedtools2/bin/bedtools \
 getfasta -fi ../data/Pver_genome_assembly_v1.0.fasta -bed /home/shared/8TB_HDD_01/pver/filter-output/merged_lncRNA_candidates.gtf -fo /home/shared/8TB_HDD_01/pver/bedtools-output/merged_lncRNA_candidates.fasta -name -split
