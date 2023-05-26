@@ -36,8 +36,10 @@ Load filtered count matrix...
 ```{r}
 countmatrix <- read.delim("~/github/zach-lncRNA/output/filtered_count_matrix.tsv", header = FALSE, sep = '\t')
 rownames(countmatrix) <- countmatrix$X
+countmatrix_w_IDs <- countmatrix
 countmatrix <- countmatrix[,-1]
 head(countmatrix)
+head (countmatrix_w_IDs)
 ```
 
 ```{r}
