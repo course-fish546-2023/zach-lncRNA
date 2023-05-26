@@ -6,7 +6,7 @@ FISH 546 project repo examining the expression of long non-coding RNAs in coral
 
 This project uses data from Danielle Becker's experiment exposing colonies of *Pocillopora verrucosa* to low level nutrient conditions (nitrogen and phosphorous).
 
-RNA-seq data for 16 control (no low level nutrient exposure) and treatment (low level nutrient exposure) colonies.
+RNA-seq data for 16 control (no low level nutrient exposure) and 16 treatment (low level nutrient exposure) colonies.
 
 -   [GitHub Repo](https://github.com/hputnam/Becker_E5)
 -   [RNA-seq data](https://gannet.fish.washington.edu/Atumefaciens/hputnam-Becker_E5/Becker_RNASeq/data/trimmed/)
