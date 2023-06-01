@@ -1,5 +1,7 @@
 # Long non-coding RNA discovery in *Pocillopora verrucosa*
 
+*For a full overview, take a look at my [project compendium](https://rpubs.com/zbengt/coral-lncRNA-discovery).*
+
 FISH 546 project repo examining the expression of long non-coding RNAs in coral
 
 ### Data
