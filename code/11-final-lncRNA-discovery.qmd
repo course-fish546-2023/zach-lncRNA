@@ -13,6 +13,8 @@ format:
 
 [Zenodo Archive](https://zenodo.org/record/7976107) [![](https://zenodo.org/badge/626610142.svg)](https://zenodo.org/badge/latestdoi/626610142)
 
+[GitHub Repository](https://github.com/course-fish546-2023/zach-lncRNA)
+
 # Introduction
 
 This project uses RNA-seq data from Danielle Becker's experiment exposing colonies of *Pocillopora sp.* to low level nutrient conditions (nitrogen and phosphorous).
@@ -416,7 +418,7 @@ write.table(tmp.sig, "../output/DEGlist.tab", row.names = T)
 
 The final DEG list of the 22 significantly differentially expressed lncRNAs can be found [here](https://github.com/course-fish546-2023/zach-lncRNA/blob/main/output/DEGlist.tab).
 
-# Part 3: Interpreating Results and Future Work
+# Part 3: Interpreting Results and Future Work
 
 -   Of 6264 identified lncRNA transcripts, only 22 were differentially expressed with a p-value of less than 0.05 in this analysis.
 
