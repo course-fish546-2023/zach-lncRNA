@@ -1,12 +1,31 @@
-# Long non-coding RNA discovery in *Pocillopora verrucosa*
+# Long non-coding RNA discovery in *Pocillopora sp.*
 
 *For a full overview, take a look at my [project compendium](https://rpubs.com/zbengt/coral-lncRNA-discovery).*
 
-FISH 546 project repo examining the expression of long non-coding RNAs in coral
+FISH 546 project repo examining the expression of long non-coding RNAs in corals
+
+# Introduction
+
+This project uses RNA-seq data from Danielle Becker's experiment exposing colonies of *Pocillopora sp.* to low level nutrient conditions (nitrogen and phosphorous).
+
+-   Original Experiment [GitHub Repo](https://github.com/hputnam/Becker_E5)
+-   Project [OSF Link](https://osf.io/uayvk/)
+
+## Experimental Design
+
+This study attempts to identify and understand the expression of long non-coding RNAs in corals experiencing low level nutrient enrichment. Long non-coding RNAs (lncRNAs), RNA strands \>200bp that do not code for proteins, are implicated in important processes of gene regulation, but little is known about their function in corals.
+
+-   *Pocillopora sp.* corals were experimentall enriched with dissolved inorganic nitrogen and phosphate for 15 months on an oligotrophic fore reef in Mo'orea, French Polynesia.
+-   Tissue samples were retrieved, went through RNA extraction, and were sent off for sequencing.
+-   The primary data type used in this study is RNA-seq data.
+
+## Objectives
+
+1.  Identify lncRNAs present within the RNA-seq data
+2.  Create a list of lncRNA transcript IDs
+3.  Examine the sensitivity of lncRNA expression to low level nutrient enrichment with differential expression analysis
 
 ### Data
-
-This project uses data from Danielle Becker's experiment exposing colonies of *Pocillopora verrucosa* to low level nutrient conditions (nitrogen and phosphorous).
 
 RNA-seq data for 16 control (no low level nutrient exposure) and 16 treatment (low level nutrient exposure) colonies.
 
@@ -20,11 +39,6 @@ RNA-seq data for 16 control (no low level nutrient exposure) and 16 treatment (l
 Original Citation: [OSF](https://osf.io/uayvk/)
 
 We experimentally enriched corals with dissolved inorganic nitrogen and phosphate for 15 months on an oligotrophic fore reef in Mo'orea, French Polynesia. Our physiological analysis of coral fragments and thermal performance show that in an oligotrophic fore reef environment, nutrient enrichment can cause changes in coral endosymbiont physiology that increase the performance of the coral holobiont. To assess the molecular underpinnings of the enhanced thermal performance due to chronic low nutrient enrichment, we assessed gene expression with RNASeq and the potential for gene expression regulation through whole genome bisulfite sequencing (WGBS). Sequencing of mtORF for 32 samples of Pocillopora spp. (n=16 per treatment) identified three possible species (Pocillopora meandrina, Pocillopora eydouxi, and an unidentified variant). To delineate between Pocillopora meandrina and Pocillopora eydouxi we will be using a new set of primers following methods found in Johnston et al. 2018.
-
-### My Project Goals
-
--   Identify lncRNAs present within the RNA-seq data
--   Create a list of lncRNA transcript IDs for further use in lncRNA-mRNA co-expression and differential expression analysis
 
 ### Workflow for identifying lncRNAs in all 32 samples
 
@@ -54,6 +68,13 @@ Endpoint is getting pushed according to how quickly I am able to finish with eno
 -   Week 10: figure generation, blast of lncRNAs, and final compendium
 
 ### Weekly Log
+
+### Final week and updates
+
+- Final zenodo release
+- Finsished differential expression figures
+- Finished compendium with full Rpub presentation in Quarto
+- Cleaned up repo
 
 ### Week 09
 
