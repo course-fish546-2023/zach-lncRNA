@@ -55,6 +55,11 @@ str(countmatrix)
 head(countmatrix)
 ```
 
+```{r}
+write.table(countmatrix, file = "../output/lncRNA_countmatrix.txt", sep = "\t", row.names = FALSE)
+```
+
+
 
 ```{r}
 deseq2.dds <- DESeqDataSetFromMatrix(countData = countmatrix,
