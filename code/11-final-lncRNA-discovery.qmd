@@ -416,7 +416,7 @@ Write final differential expression results table...
 write.table(tmp.sig, "../output/DEGlist.tab", row.names = T)
 ```
 
-The final DEG list of the 22 significantly differentially expressed lncRNAs can be found [here](https://github.com/course-fish546-2023/zach-lncRNA/blob/main/output/DEGlist.tab).
+The final differential gene expression results can be found [here](https://github.com/course-fish546-2023/zach-lncRNA/blob/main/output/DEGlist.tab).
 
 # Part 3: Interpreting Results and Future Work
 
