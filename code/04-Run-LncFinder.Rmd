@@ -5,6 +5,10 @@ date: "2023-04-19"
 output: html_document
 ---
 
+[DEPRECATED]
+
+This code was originally created to run the LncFinder package to run lncRNA transcripts through a database to identify them, but took a different path with the project and decided the LncFinder database was also insufficient as it is species specific to humans and mice. 
+
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 ```
