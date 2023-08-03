@@ -9,12 +9,119 @@ output: html_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
+```{bash}
+cat "/home/shared/8TB_HDD_02/github/zach-lncRNA/output/merged_final_lncRNAs.gtf"
+
+```
+
+FILTERING CODE THAT WORKS...
+```{bash}
+#!/bin/bash
+
+FASTA="/home/shared/8TB_HDD_02/zbengt/github/zach-lncRNA/data/Pver_genome_assembly_v1.0.fasta"
+GTF="/home/shared/8TB_HDD_02/zbengt/github/zach-lncRNA/PVER-merged_final_lncRNAs.gtf"
+OUTPUT="/home/shared/8TB_HDD_02/zbengt/github/zach-lncRNA/output/filtered_fasta_for_lncRNAs.fasta"
+
+# Read GTF file line by line
+while IFS= read -r line
+do
+  # Remove the prefix and split into scaffold and coordinates
+  line_no_prefix=${line#">transcript::"}
+  scaffold=${line_no_prefix%%:*}
+  coords=${line_no_prefix#*:}
+
+  start=$(echo $coords | cut -d- -f1)
+  end=$(echo $coords | cut -d- -f2)
+
+  # Extracting the sequence
+  sequence=$(awk -v scaffold=">${scaffold}" -v start="$start" -v end="$end" '
+    $0 ~ scaffold {flag=1; next} 
+    flag && !/^>/ {
+      seq = seq $0
+    } 
+    /^>/ && flag {
+      exit
+    } 
+    END {
+      print substr(seq, start, end-start+1)
+    }
+  ' $FASTA)
+  
+  # Writing to the output file
+  echo ">transcript::${scaffold}:${coords}" >> $OUTPUT
+  echo $sequence >> $OUTPUT
+done < $GTF
+
+```
+
+Remove duplicates from the FASTA...
+```{bash}
+awk '!seen[$0]++' RS='>' ORS='>' ~/github/zach-lncRNA/output/filtered_fasta_for_lncRNAs.fasta > ~/github/zach-lncRNA/output/deduplicated_fasta_for_lncRNAs.fasta
+
+```
+
+
+
+```{bash}
+# Sort and remove duplicate lines from the GTF file
+sort ~/github/zach-lncRNA/output/filtered_fasta_for_lncRNAs.gtf | uniq > unique_transcripts.gtf
+
+awk '
+NR == FNR {
+    split($0, arr, "::")
+    split(arr[2], parts, ":")
+    header = parts[1]
+    range = parts[2]
+    ranges[header] = range
+    print $0 > "names_order.tmp"
+    next
+}
+
+/^>/ {
+    if (seq) print_seq()
+    seq = ""
+    header = substr($0, 2)
+}
+
+!/^>/ {
+    seq = seq $0
+}
+
+END {
+    if (seq) print_seq()
+}
+
+function print_seq() {
+    if (header in ranges) {
+        split(ranges[header], pos, "-")
+        s = pos[1]
+        e = pos[2]
+        getline name < "names_order.tmp"
+        print name
+        print substr(seq, s, e - s + 1)
+    }
+}
+' unique_transcripts.gtf ~/github/zach-lncRNA/data/Pver_genome_assembly_v1.0.fasta > ~/github/zach-lncRNA/output/filtered_lncRNA_sequences.fasta
+
+# Optionally, remove the temporary files
+rm unique_transcripts.gtf
+rm names_order.tmp
+
+```
+
+Final gtf output listing transcript IDs of lncRNAs without duplicates...
+```{bash}
+sort -u ~/github/zach-lncRNA/output/merged_final_lncRNAs.gtf > ~/github/zach-lncRNA/output/pver_final_lncRNAs.gtf
+
+```
+
+
 Creating an index...
 
 ```{bash}
 /home/shared/kallisto/kallisto \
-index -i ~/github/zach-lncRNA/output/kallisto-output/Pver_genome_assembly_v1.0.index \
-~/github/zach-lncRNA/data/Pver_genome_assembly_v1.0.fasta
+index -i ~/github/zach-lncRNA/output/kallisto-output/lncRNA_sequences_kallisto.index \
+~/github/zach-lncRNA/output/deduplicated_fasta_for_lncRNAs.fasta
 ```
 
 Running kallisto on paired data...
@@ -22,8 +129,8 @@ Running kallisto on paired data...
 ```{bash}
 find /home/shared/8TB_HDD_01/pver/*R1_001.fastq* \
 | xargs basename -s _R1_001.fastq.gz | xargs -I{} /home/shared/kallisto/kallisto \
-quant -i ~/github/zach-lncRNA/output/kallisto-output/Pver_genome_assembly_v1.0.index \
--o /home/shared/8TB_HDD_01/pver/kallisto-output/{} \
+quant -i ~/github/zach-lncRNA/output/kallisto-output/lncRNA_sequences_kallisto.index \
+-o /home/shared/8TB_HDD_01/pver/lncRNA-kallisto-output/{} \
 -t 20 \
 /home/shared/8TB_HDD_01/pver/{}_R1_001.fastq.gz \
 /home/shared/8TB_HDD_01/pver/{}_R2_001.fastq.gz \
@@ -34,10 +141,24 @@ quant -i ~/github/zach-lncRNA/output/kallisto-output/Pver_genome_assembly_v1.0.i
 perl /home/shared/trinityrnaseq-v2.12.0/util/abundance_estimates_to_matrix.pl \
 --est_method kallisto \
 --gene_trans_map none \
---out_prefix ~/github/zach-lncRNA/output/count_matrix \
+--out_prefix ~/github/zach-lncRNA/output/lncRNA_counts_final \
 --name_sample_by_basedir \
-/home/shared/8TB_HDD_01/pver/kallisto-output/*/abundance.tsv
+~/github/zach-lncRNA/output/lncRNA-kallisto-output/*/abundance.tsv
 ```
+
+Remove "transcript::" from each of the transcript names to fit in figures better later on...
+```{bash}
+sed -i 's/transcript:://g' ~/github/zach-lncRNA/output/lncRNA_counts_final.isoform.counts.matrix
+
+```
+
+
+
+```{bash}
+mv /home/shared/8TB_HDD_01/pver/lncRNA-kallisto-output/* /home/shared/8TB_HDD_02/zbengt/github/zach-lncRNA/output/lncRNA-kallisto-output/
+
+```
+
 
 Filtering count matrix code for just lncRNAs...
 
